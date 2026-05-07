@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cake Bake — Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4AF37;
+    --gold-light: #F0D060;
+    --gold-dark: #9A7D0A;
+    --crimson: #8B0000;
+    --bg: #0A0705;
+    --bg2: #110E09;
+    --bg3: #1A1510;
+    --bg4: #221C13;
+    --text: #E8DCC8;
+    --text-muted: #9A8A6A;
+    --border: rgba(212,175,55,0.2);
+    --border-bright: rgba(212,175,55,0.5);
+    --card-bg: rgba(212,175,55,0.04);
+    --section-gap: 3.5rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212,175,55,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 80%, rgba(139,0,0,0.06) 0%, transparent 50%);
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: relative; text-align: center;
+    padding: 5rem 2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(212,175,55,0.07) 0%, transparent 100%);
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .header-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; letter-spacing: 0.5em;
+    color: var(--gold); opacity: 0.7;
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase; line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+  header .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.3rem;
+    color: var(--text-muted); letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+  .gold-rule {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; margin: 0 auto;
+  }
+  .gold-rule span { width: 80px; height: 1px; background: var(--gold); opacity: 0.5; }
+  .gold-rule svg { width: 18px; fill: var(--gold); opacity: 0.8; }
+
+  /* ─── NAV PILLS ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,7,5,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 1.5rem;
+    overflow-x: auto; white-space: nowrap;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav ul { display: inline-flex; gap: 0.5rem; list-style: none; width: 100%; justify-content: center; flex-wrap: wrap; }
+  nav a {
+    font-family: 'Cinzel', serif; font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+  nav a:hover {
+    color: var(--gold); border-color: var(--gold);
+    background: rgba(212,175,55,0.06);
+  }
+
+  /* ─── MAIN WRAPPER ─── */
+  main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+  /* ─── SECTION ─── */
+  .menu-section {
+    margin-top: var(--section-gap);
+    animation: fadeUp 0.6s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--gold-dark), transparent);
+    opacity: 0.5;
+  }
+  /* per-section accent colours */
+  .sec-cakes .section-title  { color: #E8B86D; }
+  .sec-cheesecakes .section-title { color: #F0C080; }
+  .sec-pastry .section-title { color: #D4A0C0; }
+  .sec-cheesepastry .section-title { color: #C0D4A0; }
+  .sec-caketub .section-title { color: #A0C8D4; }
+  .sec-cakejars .section-title { color: #D4B0A0; }
+  .sec-cupcakes .section-title { color: #C0A8D4; }
+  .sec-brownies .section-title { color: #D4C0A0; }
+  .sec-designer .section-title { color: var(--gold); }
+
+  /* ─── DUAL-PRICE TABLE (Cakes / Cheesecakes) ─── */
+  .price-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.6rem;
+  }
+  .price-table-header {
+    display: grid; grid-template-columns: 1fr auto auto;
+    gap: 1rem; padding: 0.4rem 1rem;
+    font-family: 'Cinzel', serif; font-size: 0.6rem;
+    letter-spacing: 0.18em; color: var(--gold); opacity: 0.7;
+    text-transform: uppercase;
+  }
+  .price-table-header.full { grid-template-columns: 1fr auto; }
+
+  .price-row {
+    display: grid; grid-template-columns: 1fr auto auto;
+    gap: 1rem; align-items: center;
+    padding: 0.65rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 2px solid transparent;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+  }
+  .price-row::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(212,175,55,0.03), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .price-row:hover { border-color: var(--border-bright); border-left-color: var(--gold); }
+  .price-row:hover::before { opacity: 1; }
+
+  .price-row.single-price { grid-template-columns: 1fr auto; }
+
+  .item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 400;
+    color: var(--text); letter-spacing: 0.02em;
+  }
+  .badge {
+    display: inline-block; font-size: 0.55rem;
+    letter-spacing: 0.1em; padding: 0.1em 0.5em;
+    border-radius: 2px; font-family: 'Raleway', sans-serif;
+    font-weight: 600; text-transform: uppercase; margin-left: 0.5rem;
+  }
+  .badge-best {
+    background: rgba(212,175,55,0.15); color: var(--gold);
+    border: 1px solid rgba(212,175,55,0.4);
+  }
+  .badge-seasonal {
+    background: rgba(100,200,100,0.1); color: #7EC87E;
+    border: 1px solid rgba(100,200,100,0.3);
+  }
+
+  .price-val {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--gold); text-align: right;
+    white-space: nowrap;
+  }
+  .price-val.muted { color: var(--text-muted); font-weight: 400; font-size: 0.8rem; }
+
+  /* Two-column cake layout */
+  .two-col-cakes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media(max-width: 700px) { .two-col-cakes { grid-template-columns: 1fr; } }
+  .col-group-label {
+    font-family: 'Cinzel', serif; font-size: 0.6rem;
+    letter-spacing: 0.2em; color: var(--gold); opacity: 0.6;
+    text-transform: uppercase; margin-bottom: 0.6rem;
+    padding-left: 1rem;
+    display: flex; gap: 2rem;
+  }
+  .col-group-label span:last-child, .col-group-label span:nth-last-child(2) {
+    margin-left: auto; min-width: 52px; text-align: right;
+  }
+
+  /* ─── CAKE GRID ─── */
+  .cake-col { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  /* ─── SIMPLE PRICE GRID ─── */
+  .simple-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.6rem;
+  }
+
+  /* ─── CAKE TUBS / JARS: two-column list ─── */
+  .two-col-simple {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1.5rem;
+  }
+  @media(max-width: 540px) { .two-col-simple { grid-template-columns: 1fr; } }
+
+  /* ─── DESIGNER CAKES CARD ─── */
+  .designer-card {
+    border: 1px solid var(--border-bright);
+    border-radius: 4px;
+    padding: 2.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(139,0,0,0.05) 100%);
+    position: relative; overflow: hidden;
+  }
+  .designer-card::before {
+    content: '✦ BESPOKE CREATIONS ✦';
+    position: absolute; top: 1rem; left: 50%; transform: translateX(-50%);
+    font-family: 'Cinzel', serif; font-size: 0.6rem;
+    letter-spacing: 0.3em; color: var(--gold); opacity: 0.5;
+    white-space: nowrap;
+  }
+  .designer-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-style: italic;
+    color: var(--gold-light); margin-bottom: 1.2rem; margin-top: 1.2rem;
+  }
+  .designer-item {
+    display: flex; align-items: center; gap: 1rem;
+    justify-content: center; padding: 0.8rem 1.5rem;
+    margin: 0.4rem auto; max-width: 420px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; color: var(--text);
+  }
+  .designer-item::before { content: '◆'; color: var(--gold); font-size: 0.5rem; }
+  .designer-price { margin-left: auto; font-family: 'Raleway', sans-serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.05em; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 3rem 2rem;
+    margin-top: 4rem;
+    position: relative;
+  }
+  footer::before {
+    content: '';
+    display: block; width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 2rem;
+  }
+  .tax-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic;
+    color: var(--gold); letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .footer-small {
+    font-size: 0.75rem; color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width: 600px) {
+    :root { --section-gap: 2.5rem; }
+    nav ul { justify-content: flex-start; }
+    .price-table { grid-template-columns: 1fr; }
+    .simple-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="header-ornament">Est. — Artisan Bakery —</p>
+  <h1>The Cake Bake</h1>
+  <p class="subtitle">A curated collection of artisan confections</p>
+  <div class="gold-rule">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+    <span></span>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#cakes">Cakes</a></li>
+    <li><a href="#cheesecakes">Cheese Cakes</a></li>
+    <li><a href="#pastry">Pastry</a></li>
+    <li><a href="#cheesepastry">Cheese Pastry</a></li>
+    <li><a href="#caketub">Cake Tubs</a></li>
+    <li><a href="#cakejars">Cake Jars</a></li>
+    <li><a href="#cupcakes">Cupcakes</a></li>
+    <li><a href="#brownies">Brownies</a></li>
+    <li><a href="#designer">Designer</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ═══════════════ CAKES ═══════════════ -->
+  <section id="cakes" class="menu-section sec-cakes">
+    <div class="section-header">
+      <h2 class="section-title">Cakes</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="col-group-label" style="grid-column:1/-1">
+      <span>Flavour</span>
+      <span>Half Kg</span>
+      <span>Full Kg</span>
+    </div>
+
+    <div class="two-col-cakes">
+      <!-- LEFT COLUMN -->
+      <div class="cake-col">
+        <div class="price-row"><span class="item-name">Vanilla</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Pineapple</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Pineapple with Almonds</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Arabian Nuts</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Strawberry</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Fresh Strawberry Cake</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">White Forest</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Fresh Fruit</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Fresh Mango <span class="badge badge-seasonal">Seasonal</span></span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Snow White <span class="badge badge-best">Best Seller</span></span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Butter Scotch</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Blueberry</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Red Velvet</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Marble Fantasy</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Coffee N Crunch</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Vanilla</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Truffle</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Tiramisu</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Choco Chip</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Black Forest</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Belgium Chocolate</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Snicker</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Nutty Buddy</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Oreo</span><span class="price-val">₹500/-</span><span class="price-val">₹1000/-</span></div>
+        <div class="price-row"><span class="item-name">Biscoff</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Ferrero</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Classic Dairy Milk Cake</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Hazelnut Rocher Cake</span><span class="price-val">₹800/-</span><span class="price-val">₹1600/-</span></div>
+        <div class="price-row"><span class="item-name">Raspberry Chocolate Cake</span><span class="price-val">₹750/-</span><span class="price-val">₹1500/-</span></div>
+        <div class="price-row"><span class="item-name">Tripple Chocolate Cake</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+      </div>
+      <!-- RIGHT COLUMN -->
+      <div class="cake-col">
+        <div class="price-row"><span class="item-name">Pistachio</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Orange Velvet</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Caramel</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Paan</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Rose Gulkand</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Thandai</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Kitkat</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Bubblegum</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Choco Lava</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Brownie</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Opium</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Hazelnut Praline</span><span class="price-val">₹750/-</span><span class="price-val">₹1500/-</span></div>
+        <div class="price-row"><span class="item-name">Rooh Gulab</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Purple Velvet</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Death by Chocolate</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Rasmalai</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Hazelnut Nutella</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Double Delight</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Fruit</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Shots</span><span class="price-val">₹550/-</span><span class="price-val">₹1100/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Walnut</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Orange</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Milk Chocolate Truffle</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Crackle</span><span class="price-val">₹600/-</span><span class="price-val">₹1200/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Almond</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+        <div class="price-row"><span class="item-name">Chocolate Strawberry</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Tin Cake</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Lemon Vanilla Cake</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+        <div class="price-row"><span class="item-name">Rainbow Cake</span><span class="price-val muted">——</span><span class="price-val">₹1500/-</span></div>
+        <div class="price-row"><span class="item-name">Kulfi Faluda</span><span class="price-val">₹650/-</span><span class="price-val">₹1300/-</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CHEESE CAKES ═══════════════ -->
+  <section id="cheesecakes" class="menu-section sec-cheesecakes">
+    <div class="section-header">
+      <h2 class="section-title">Cheese Cakes</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="col-group-label">
+      <span>Variety</span>
+      <span>Half Kg</span>
+      <span>Full Kg</span>
+    </div>
+    <div class="price-table">
+      <div class="price-row"><span class="item-name">Vanilla Cheese</span><span class="price-val">₹700/-</span><span class="price-val">₹1400/-</span></div>
+      <div class="price-row"><span class="item-name">Strawberry Cheese</span><span class="price-val">₹750/-</span><span class="price-val">₹1500/-</span></div>
+      <div class="price-row"><span class="item-name">Blueberry Cheese</span><span class="price-val">₹750/-</span><span class="price-val">₹1500/-</span></div>
+      <div class="price-row"><span class="item-name">Chocolate Cheese</span><span class="price-val">₹800/-</span><span class="price-val">₹1600/-</span></div>
+      <div class="price-row"><span class="item-name">Hazelnut Cheese</span><span class="price-val">₹800/-</span><span class="price-val">₹1600/-</span></div>
+      <div class="price-row"><span class="item-name">Baked Vanilla Cheese</span><span class="price-val">₹800/-</span><span class="price-val">₹1600/-</span></div>
+      <div class="price-row"><span class="item-name">Lotus Biscoff Cheese</span><span class="price-val">₹1000/-</span><span class="price-val">₹2000/-</span></div>
+      <div class="price-row"><span class="item-name">Mango Cheese</span><span class="price-val">₹800/-</span><span class="price-val">₹1600/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PASTRY ═══════════════ -->
+  <section id="pastry" class="menu-section sec-pastry">
+    <div class="section-header">
+      <h2 class="section-title">Pastry</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="simple-grid">
+      <div class="price-row single-price"><span class="item-name">Pineapple</span><span class="price-val">₹50/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Black Forest</span><span class="price-val">₹60/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Fresh Fruit</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Truffle</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Belgium Chocolate</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Red Velvet</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Snow White</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Nutty Butty</span><span class="price-val">₹80/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Kitkat</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Hazelnut Crunch</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Paan</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Rasmalai</span><span class="price-val">₹120/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Tiramisu</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Biscoff</span><span class="price-val">₹200/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Rainbow</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Truffle Heart</span><span class="price-val">₹200/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Unicorn</span><span class="price-val">₹200/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Kitkat Love</span><span class="price-val">₹250/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Crackle</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Dairy Milk Pastry</span><span class="price-val">₹150/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CHEESE PASTRY ═══════════════ -->
+  <section id="cheesepastry" class="menu-section sec-cheesepastry">
+    <div class="section-header">
+      <h2 class="section-title">Cheese Pastry</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="simple-grid">
+      <div class="price-row single-price"><span class="item-name">Vanilla Cheese</span><span class="price-val">₹130/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Blueberry Cheese</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Strawberry Cheese</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Cheese</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Hazelnut Cheese</span><span class="price-val">₹180/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Biscoff Cheese</span><span class="price-val">₹250/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Lemon Cheese</span><span class="price-val">₹250/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CAKE TUB ═══════════════ -->
+  <section id="caketub" class="menu-section sec-caketub">
+    <div class="section-header">
+      <h2 class="section-title">Cake Tubs</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="two-col-simple">
+      <div class="price-row single-price"><span class="item-name">Rose Cake Tub</span><span class="price-val">₹250/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Pistachio Cake Tub</span><span class="price-val">₹300/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Cake Tub</span><span class="price-val">₹250/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Mango Cake Tub</span><span class="price-val">₹300/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Rasmalai Cake Tub</span><span class="price-val">₹300/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CAKE JARS ═══════════════ -->
+  <section id="cakejars" class="menu-section sec-cakejars">
+    <div class="section-header">
+      <h2 class="section-title">Cake Jars</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="two-col-simple">
+      <div class="price-row single-price"><span class="item-name">Blueberry</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Strawberry</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Cheesy Red Velvet</span><span class="price-val">₹200/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Tiramisu</span><span class="price-val">₹200/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Oreo</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate</span><span class="price-val">₹200/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Mango <span class="badge badge-seasonal">Seasonal</span></span><span class="price-val">₹250/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CUPCAKES ═══════════════ -->
+  <section id="cupcakes" class="menu-section sec-cupcakes">
+    <div class="section-header">
+      <h2 class="section-title">Cupcakes</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="simple-grid">
+      <div class="price-row single-price"><span class="item-name">Vanilla Cupcake</span><span class="price-val">₹80/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Strawberry Cupcake</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Blueberry Cupcake</span><span class="price-val">₹90/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Cupcake</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocochip Cupcake</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Oreo Cupcake</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Kitkat Cupcake</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Ferrero Cupcake</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Nutella Cupcake</span><span class="price-val">₹100/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Red Velvet Cupcake</span><span class="price-val">₹100/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ BROWNIES ═══════════════ -->
+  <section id="brownies" class="menu-section sec-brownies">
+    <div class="section-header">
+      <h2 class="section-title">Brownies</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="simple-grid">
+      <div class="price-row single-price"><span class="item-name">Choco Walnut Brownie</span><span class="price-val">₹80/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Brownie</span><span class="price-val">₹60/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Chocolate Brownie Tub</span><span class="price-val">₹120/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Hazelnut Brownie Tub</span><span class="price-val">₹150/-</span></div>
+      <div class="price-row single-price"><span class="item-name">Biscoff Brownie Tub</span><span class="price-val">₹200/-</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ DESIGNER CAKES ═══════════════ -->
+  <section id="designer" class="menu-section sec-designer">
+    <div class="section-header">
+      <h2 class="section-title">Designer Cakes</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="designer-card">
+      <h3>Bespoke Creations</h3>
+      <div class="designer-item">
+        Fondant Designer Cakes
+        <span class="designer-price">Rates According to Design</span>
+      </div>
+      <div class="designer-item">
+        Non-Fondant Designer Cakes
+        <span class="designer-price">Rates According to Design</span>
+      </div>
+      <p style="margin-top:2rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-muted);font-size:0.95rem;">
+        Each creation is uniquely crafted to your vision. Please inquire for a personalised quote.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="tax-note">✦ All prices are exclusive of applicable taxes ✦</p>
+  <p class="footer-small" style="margin-top:0.8rem;opacity:0.5;">Menu subject to change without prior notice &nbsp;·&nbsp; Seasonal items availability may vary</p>
+</footer>
+
+<script>
+  // Intersection observer for staggered reveal
+  const sections = document.querySelectorAll('.menu-section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animationPlayState = 'running';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  sections.forEach((s, i) => {
+    s.style.animationDelay = `${i * 0.05}s`;
+    s.style.animationPlayState = 'paused';
+    observer.observe(s);
+  });
+
+  // Highlight active nav on scroll
+  const navLinks = document.querySelectorAll('nav a');
+  const sectionEls = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sectionEls.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur
+        ? 'var(--gold)' : '';
+      a.style.borderColor = a.getAttribute('href') === '#' + cur
+        ? 'var(--gold)' : '';
+      a.style.background = a.getAttribute('href') === '#' + cur
+        ? 'rgba(212,175,55,0.08)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
